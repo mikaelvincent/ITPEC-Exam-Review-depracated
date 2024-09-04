@@ -7,7 +7,7 @@ $conn = connectToDatabase();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'logAnswer') {
     logAnswer($conn, $_POST['userId'], $_POST['questionId']);
-    header("Location: index.php"); // Redirect to the same page to refresh the content
+    header("Location: /"); // Redirect to the same page to refresh the content
     exit;
 }
 
@@ -25,7 +25,7 @@ $userId = getUserId($conn, $user_uid);
 
 $question = getRandomQuestion($conn, $userId); // Fetch a random question
 if (!$question) {
-    header("Location: congratulations.php"); // Redirect if no questions are left
+    header("Location: congratulations"); // Redirect if no questions are left
     exit;
 }
 
@@ -47,13 +47,13 @@ closeDatabaseConnection($conn);
 
 <body>
     <nav class="navbar navbar-expand-md bg-body py-3">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.php"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg class="bi bi-bar-chart" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg class="bi bi-bar-chart" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"></path>
                     </svg></span><span>PhilNITS FE Review</span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-3"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div id="navcol-3" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="credits.html">Credits</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="credits">Credits</a></li>
                 </ul>
             </div>
         </div>
@@ -84,7 +84,7 @@ closeDatabaseConnection($conn);
             <div class="row gy-4 d-none" id="success-row">
                 <div class="col d-flex justify-content-center">
                     <button class="btn btn-outline-primary btn-lg see-explanation-btn" type="button" data-bs-target="#explanation" data-bs-toggle="modal">See explanation</button>
-                    <form method="post" action="index.php">
+                    <form method="post" action="/">
                         <input type="hidden" name="userId" value="<?= htmlspecialchars($userId) ?>">
                         <input type="hidden" name="questionId" value="<?= htmlspecialchars($question['questionId']) ?>">
                         <input type="hidden" name="action" value="logAnswer">
@@ -111,7 +111,7 @@ closeDatabaseConnection($conn);
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <p class="text-muted my-2">Copyright © 2024 <a class="text-decoration-none" href="credits.html">PhilNITS FE Review</a></p>
+                    <p class="text-muted my-2">Copyright © 2024 <a class="text-decoration-none" href="credits">PhilNITS FE Review</a></p>
                 </div>
             </div>
         </div>
