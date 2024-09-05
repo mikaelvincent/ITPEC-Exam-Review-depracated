@@ -49,7 +49,7 @@ closeDatabaseConnection($conn);
     <nav class="navbar navbar-expand-md bg-body py-3">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg class="bi bi-bar-chart" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"></path>
-                    </svg></span><span>PhilNITS FE Review</span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-3"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    </svg></span><span class="fw-bold" >PhilNITS FE Review</span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-3"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div id="navcol-3" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
@@ -62,7 +62,7 @@ closeDatabaseConnection($conn);
         <div class="container py-4 py-xl-5">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <h2><?= htmlspecialchars($question['questionText']) ?></h2>
+                    <h2 class="fw-bold"><?= htmlspecialchars($question['questionText']) ?></h2>
                     <?php if (!empty($question['questionImageUrl'])): ?>
                         <img class="img-fluid" src="assets/img/<?= htmlspecialchars($question['questionImageUrl']) ?>">
                     <?php endif; ?>
@@ -74,7 +74,7 @@ closeDatabaseConnection($conn);
                         <div class="card">
                             <div class="card-body p-4">
                                 <a class="stretched-link choice" href="#">
-                                    <h4 class="card-content"><?= chr(65 + $index) ?>.</h4>
+                                    <h4 class="card-content fw-bold"><?= chr(65 + $index) ?>.</h4>
                                     <p><?= htmlspecialchars($choice) ?></p>
                                 </a></div>
                         </div>
@@ -88,7 +88,7 @@ closeDatabaseConnection($conn);
                         <input type="hidden" name="userId" value="<?= htmlspecialchars($userId) ?>">
                         <input type="hidden" name="questionId" value="<?= htmlspecialchars($question['questionId']) ?>">
                         <input type="hidden" name="action" value="logAnswer">
-                        <button class="btn btn-primary btn-lg proceed-btn" type="submit">Proceed to next question</button>
+                        <button class="btn btn-outline-primary btn-lg proceed-btn" type="submit">Proceed to next question</button>
                     </form>
                     <div class="modal fade" role="dialog" tabindex="-1" id="explanation">
                         <div class="modal-dialog modal-xl" role="document">
@@ -111,12 +111,13 @@ closeDatabaseConnection($conn);
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <p class="text-muted my-2">Copyright © 2024 <a class="text-decoration-none" href="credits">PhilNITS FE Review</a></p>
+                    <p class="text-muted my-2">Copyright © 2024 <a class="text-muted text-decoration-none" href="credits">PhilNITS FE Review</a></p>
                 </div>
             </div>
         </div>
     </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/confetti.min.js"></script>
     <script src="assets/js/answerCheck.js"></script>
     <script type="text/javascript">
         var questionData = <?= json_encode($question) ?>;
