@@ -82,7 +82,7 @@ if (!$noMoreQuestions) {
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <p class="text-muted my-2">Copyright&nbsp;© 2024 <a class="text-decoration-none" href="credits">PhilNITS FE Review</a></p>
+                    <p class="text-muted my-2">Copyright&nbsp;© 2024 <a class="text-muted text-decoration-none" href="credits">PhilNITS FE Review</a></p>
                 </div>
             </div>
         </div>
