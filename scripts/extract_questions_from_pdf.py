@@ -1,19 +1,19 @@
-import fitz  # PyMuPDF
+import fitz
 import re
 import os
 from PIL import Image, ImageOps
 
 # Constants for easy reconfiguration
 INPUT_DIR = "questionnaires"        # Folder containing input PDFs
-OUTPUT_DIR = "output"               # Folder where processed images will be saved
+OUTPUT_DIR = "output"               # Folder where all processed images will be saved
 ERROR_LOG_FILE = "error_logs.txt"   # Error log file (created only if errors occur)
 DPI = 300                           # Output image DPI
-PADDING = 16                        # Padding added around cropped images
+PADDING = 0                         # Padding added around cropped images
 IMAGE_FORMAT = "png"                # Output image format
 FOOTER_THRESHOLD_RATIO = 0.9        # Fallback threshold to exclude footer (bottom 10% of the page)
 QUESTION_PATTERN = r'Q\d+\s*'       # Regex to capture question numbers
 
-def extract_questions_from_pdf(pdf_file, output_subdir, error_log):
+def extract_questions_from_pdf(pdf_file, error_log):
     """
     Extracts questions from a PDF, identifies each question's bounding box, 
     and saves the content as an image. Skips the first page to avoid sample 
@@ -21,19 +21,18 @@ def extract_questions_from_pdf(pdf_file, output_subdir, error_log):
     
     Parameters:
         pdf_file (str): The path to the input PDF.
-        output_subdir (str): The folder to save the output images.
         error_log (list): List to store error messages.
     """
     try:
         pdf_document = fitz.open(pdf_file)
         page_count = pdf_document.page_count
 
-        # Process each page, starting from page 2 (skip the first page)
+        # Process each page, starting from the 2nd page
         for page_num in range(1, page_count):
             page = pdf_document.load_page(page_num)
             text = page.get_text("text")
 
-            # Find all question markers on the page (e.g., Q1, Q2, etc.)
+            # Find all question markers on the page
             question_markers = re.findall(QUESTION_PATTERN, text)
 
             if len(question_markers) > 0:
@@ -49,7 +48,7 @@ def extract_questions_from_pdf(pdf_file, output_subdir, error_log):
 
                         save_question_as_image(
                             current_question_instance, next_question_instance,
-                            pdf_document, output_subdir, page_num, pdf_file, error_log
+                            pdf_document, page_num, pdf_file, error_log
                         )
                     except Exception as e:
                         error_log.append(
@@ -65,7 +64,7 @@ def extract_questions_from_pdf(pdf_file, output_subdir, error_log):
             f"Error processing the entire PDF: {str(e)}\n"
         )
 
-def save_question_as_image(current_question_instance, next_question_instance, pdf_document, output_subdir, page_num, pdf_file, error_log):
+def save_question_as_image(current_question_instance, next_question_instance, pdf_document, page_num, pdf_file, error_log):
     """
     Saves the content of a question as an image. Crops the page region 
     between two question markers, dynamically excludes footers, and adds padding.
@@ -74,7 +73,6 @@ def save_question_as_image(current_question_instance, next_question_instance, pd
         current_question_instance (fitz.Rect): Bounding box of the current question.
         next_question_instance (fitz.Rect): Bounding box of the next question (if available).
         pdf_document (fitz.Document): The PDF document object.
-        output_subdir (str): Directory to save the extracted image.
         page_num (int): Current page number being processed.
         pdf_file (str): The path to the input PDF file.
         error_log (list): List to store error messages.
@@ -96,10 +94,10 @@ def save_question_as_image(current_question_instance, next_question_instance, pd
 
     # Define the region to clip
     clip_rect = fitz.Rect(
-        current_question_instance.x0,
-        current_question_instance.y0,
-        page.rect.width,  # Right edge of the page
-        bottom_y  # Bottom of the next question or the top of the footer
+        0,                              # Left edge of the page
+        current_question_instance.y0,   # Top edge based on current question marker
+        page.rect.width,                # Right edge of the page
+        bottom_y                        # Bottom of the next question or the top of the footer
     )
 
     # Generate an image of the specified region
@@ -119,20 +117,21 @@ def save_question_as_image(current_question_instance, next_question_instance, pd
         )
         return
 
-    # Save the image file
-    output_image = os.path.join(output_subdir, f"{os.path.splitext(os.path.basename(pdf_file))[0]}_{question_number}.{IMAGE_FORMAT}")
+    # Save the image file (in the OUTPUT_DIR)
+    output_image = os.path.join(OUTPUT_DIR, f"{os.path.splitext(os.path.basename(pdf_file))[0]}_{question_number}.{IMAGE_FORMAT}")
     pix.save(output_image)
 
-def process_images(output_subdir):
+def process_images():
     """
     Processes all saved images by cropping whitespace and adding padding.
     
-    Parameters:
-        output_subdir (str): Directory containing the images to process.
+    This function iterates over all image files in the output directory,
+    crops any excess whitespace, and adds a uniform padding around the image
+    to ensure proper formatting. The modified images are saved back to the same directory.
     """
-    for img_file in os.listdir(output_subdir):
+    for img_file in os.listdir(OUTPUT_DIR):
         if img_file.endswith(f".{IMAGE_FORMAT}"):
-            img_path = os.path.join(output_subdir, img_file)
+            img_path = os.path.join(OUTPUT_DIR, img_file)
             img = Image.open(img_path)
 
             # Crop whitespace from the image
@@ -152,21 +151,25 @@ def process_all_pdfs():
     Main function to process all PDFs in the input folder. Each PDF is parsed, 
     questions are extracted and saved as images, and footers are dynamically excluded.
     If any errors occur during processing, they are logged.
+    
+    This function ensures that the output directory exists before starting the process.
     """
     error_log = []
+
+    # Ensure the output directory exists
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
 
     # Iterate over all PDF files in the input directory
     for pdf_file in os.listdir(INPUT_DIR):
         if pdf_file.endswith(".pdf"):
             pdf_path = os.path.join(INPUT_DIR, pdf_file)
-            output_subdir = os.path.join(OUTPUT_DIR, os.path.splitext(pdf_file)[0])
-
-            if not os.path.exists(output_subdir):
-                os.makedirs(output_subdir)
 
             # Extract and process each PDF
-            extract_questions_from_pdf(pdf_path, output_subdir, error_log)
-            process_images(output_subdir)
+            extract_questions_from_pdf(pdf_path, error_log)
+    
+    # Process all images saved in the output directory
+    process_images()
 
     # Write error log if any errors occurred
     if error_log:
