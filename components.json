@@ -1,20 +1,24 @@
 {
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "app/globals.css",
-    "baseColor": "slate",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
-  }
+    "components": {
+      "Alert": "./src/components/common/Alert.tsx",
+      "Footer": "./src/components/common/Footer.tsx",
+      "Navbar": "./src/components/common/Navbar.tsx",
+      "ChoiceCard": "./src/components/exams/ChoiceCard.tsx",
+      "Choices": "./src/components/exams/Choices.tsx",
+      "Question": "./src/components/exams/Question.tsx",
+      "Features": "./src/components/home/Features.tsx",
+      "MainHeader": "./src/components/home/MainHeader.tsx",
+      "Pricing": "./src/components/home/Pricing.tsx",
+      "PricingCard": "./src/components/home/PricingCard.tsx",
+      "Button": "./src/components/ui/Button.tsx",
+      "Card": "./src/components/ui/Card.tsx",
+      "Form": "./src/components/ui/Form/Form.tsx",
+      "Input": "./src/components/ui/Form/Input.tsx",
+      "Label": "./src/components/ui/Form/Label.tsx",
+      "AlertDialog": "./src/components/ui/AlertDialog.tsx",
+      "ScrollArea": "./src/components/ui/ScrollArea.tsx",
+      "Tooltip": "./src/components/ui/Tooltip.tsx",
+      "Toast": "./src/components/ui/Toast/Toast.tsx",
+      "Toaster": "./src/components/ui/Toast/Toaster.tsx"
+    }
 }

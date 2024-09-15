@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -15,33 +8,39 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  uid       String   @unique
-  createdAt DateTime @default(now())
+  id        String          @id @default(uuid())
+  uid       String          @unique
+  createdAt DateTime        @default(now())
+  answers   AnswerHistory[]
 }
 
 model AnswerHistory {
-  id         String   @id @default(cuid())
+  id         String    @id @default(uuid())
   questionId String
   userId     String
   status     Boolean
-  createdAt  DateTime @default(now())
+  createdAt  DateTime  @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
 
 model Question {
-  id               String        @id @default(cuid())
+  id               String         @id @default(uuid())
   questionText     String
   questionImageUrl String?
   questionChoices  String[]
   correctAnswer    Int
+  createdAt        DateTime       @default(now())
   explanations     Explanation[]
-  createdAt        DateTime      @default(now())
+  answers          AnswerHistory[]
 }
 
 model Explanation {
-  id          String   @id @default(cuid())
-  questionId  String   @unique
-  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  id          String    @id @default(uuid())
+  questionId  String    @unique
   explanation String
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
+
+  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }

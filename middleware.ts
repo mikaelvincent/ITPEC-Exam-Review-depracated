@@ -1,40 +1,32 @@
-// middleware.ts
-
 import { NextResponse } from 'next/server';
-import { createGuestUser } from './actions/user.action';
-import { cookies } from 'next/headers';
+import { createGuestUser } from '@/services/userService';
+import type { NextRequest } from 'next/server';
 
-export async function middleware(req: Request) {
-    const cookieStore = cookies();
-    const guestUidCookie = cookieStore.get('guest_uid')?.value;
+export async function middleware(req: NextRequest) {
+  const guestUid = req.cookies.get('guest_uid')?.value;
 
-    if (!guestUidCookie) {
-        const guest = await createGuestUser();
+  if (!guestUid) {
+    const guestUser = await createGuestUser();
 
-        if (!guest) {
-            return NextResponse.next();
-        }
-
-        const res = NextResponse.next();
-
-        res.cookies.set({
-            name: 'guest_uid',
-            value: guest?.uid,
-            httpOnly: true,
-            maxAge: 60 * 60 * 24 * 7, // Set cookie for 7 days
-        });
-
-        return res;
+    if (!guestUser) {
+      return NextResponse.next();
     }
 
-    return NextResponse.next();
+    const res = NextResponse.next();
+    res.cookies.set('guest_uid', guestUser.uid, {
+      httpOnly: true,
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return res;
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher: [
-        // Skip Next.js internals and all static files, unless found in search params
-        '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-        // Always run for API routes
-        '/(api|trpc)(.*)',
-    ],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
 };
