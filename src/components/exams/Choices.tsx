@@ -13,7 +13,7 @@ import { AnswerSchema } from '@/lib/schemas';
 import { checkAnswer, checkAnsweredByUser } from '@/services/answerService';
 import { useToast } from '@/hooks/useToast';
 import { Question } from '@prisma/client';
-import { LoaderIcon, CircleCheckIcon } from 'lucide-react';
+import { CheckIcon, LoaderIcon } from 'lucide-react';
 
 interface ChoicesProps {
   question: Question;

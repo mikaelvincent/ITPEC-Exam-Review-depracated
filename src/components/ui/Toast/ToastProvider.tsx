@@ -1,5 +1,3 @@
-"use client";
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { RadixToastProvider } from './Toast';
@@ -19,10 +17,6 @@ interface ToastContextProps {
 
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
 
-/**
- * Custom hook to use the Toast context.
- * @returns ToastContextProps
- */
 export const useToastContext = (): ToastContextProps => {
   const context = useContext(ToastContext);
   if (!context) {
@@ -31,27 +25,14 @@ export const useToastContext = (): ToastContextProps => {
   return context;
 };
 
-/**
- * ToastProvider component that wraps the application and provides toast functionality.
- * @param children - ReactNode
- * @returns JSX.Element
- */
 export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  /**
-   * Adds a new toast to the list.
-   * @param toast - Omit<Toast, 'id'>
-   */
   const addToast = (toast: Omit<Toast, 'id'>) => {
     const id = uuidv4();
     setToasts((prevToasts) => [...prevToasts, { id, ...toast }]);
   };
 
-  /**
-   * Removes a toast by its ID.
-   * @param id - string
-   */
   const removeToast = (id: string) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   };
@@ -64,3 +45,5 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     </RadixToastProvider>
   );
 };
+
+export { ToastContext };
