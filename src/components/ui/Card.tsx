@@ -17,5 +17,4 @@ const CardTitle: React.FC<CardTitleProps> = ({ children, ...props }) => <h2 {...
 interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 const CardContent: React.FC<CardContentProps> = ({ children, ...props }) => <div {...props}>{children}</div>;
 
-export default Card;
-export { CardHeader, CardTitle, CardContent };
+export { Card, CardHeader, CardTitle, CardContent };
