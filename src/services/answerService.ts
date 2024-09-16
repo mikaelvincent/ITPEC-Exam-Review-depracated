@@ -12,7 +12,7 @@ export const getQuestionsAnswered = async (userId: string) => {
   try {
     const answers = await prisma.answerHistory.findMany({
       where: {
-        userId,
+        userId: parseInt(userId),
         status: true,
       },
       select: {
@@ -37,8 +37,8 @@ export const checkAnsweredByUser = async (userId: string, questionId: string) =>
   try {
     const answer = await prisma.answerHistory.findFirst({
       where: {
-        userId,
-        questionId,
+        userId: parseInt(userId),
+        questionId: parseInt(questionId),
         status: true,
       },
     });
@@ -60,8 +60,8 @@ export const setQuestionAnswered = async (userId: string, questionId: string) =>
   try {
     const answer = await prisma.answerHistory.create({
       data: {
-        userId,
-        questionId,
+        userId: parseInt(userId),
+        questionId: parseInt(questionId),
         status: true,
       },
     });
