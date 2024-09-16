@@ -1,5 +1,8 @@
 # Dependency directories
 /node_modules/
 
-# Environment variables
+/# Build and cache directories
+/.next/
+
+/# Environment variables
 .env
