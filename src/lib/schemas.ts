@@ -4,18 +4,15 @@ import { z } from 'zod';
  * Schema for validating answer submissions.
  */
 export const AnswerSchema = z.object({
-  id: z.string().nonempty('Question ID is required'),
-  choice: z
-    .string()
-    .nonempty('Choice is required')
-    .regex(/^\d+$/, 'Choice must be a valid number'),
+  id: z.number().nonnegative('Question ID is required'),
+  choice: z.number().nonnegative('Choice index is required'),
 });
 
 /**
  * Schema for requesting AI explanations.
  */
 export const ExplanationSchema = z.object({
-  questionId: z.string().nonempty('Question ID is required'),
+  questionId: z.number().nonnegative('Question ID is required'),
 });
 
 /**
