@@ -1,16 +1,16 @@
 "use client";
 
 import React from 'react';
-import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose } from './Toast';
-import { useToast } from '@/hooks/useToast';
+import { Toast, ToastTitle, ToastDescription, ToastClose, ToastViewport } from './Toast';
+import { useToastContext } from './ToastProvider';
 
 const Toaster: React.FC = () => {
-  const { toasts } = useToast();
+  const { toasts, removeToast } = useToastContext();
 
   return (
-    <ToastProvider>
+    <>
       {toasts.map((toast) => (
-        <Toast key={toast.id} {...toast}>
+        <Toast key={toast.id} onOpenChange={(open) => !open && removeToast(toast.id)}>
           <div className="flex-1">
             {toast.title && <ToastTitle>{toast.title}</ToastTitle>}
             {toast.description && <ToastDescription>{toast.description}</ToastDescription>}
@@ -19,7 +19,7 @@ const Toaster: React.FC = () => {
         </Toast>
       ))}
       <ToastViewport />
-    </ToastProvider>
+    </>
   );
 };
 

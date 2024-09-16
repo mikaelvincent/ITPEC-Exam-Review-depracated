@@ -1,5 +1,3 @@
-// src/components/ui/Toast/Toast.tsx
-
 "use client";
 
 import React from 'react';
@@ -15,7 +13,11 @@ const ToastViewport = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitive.Viewport
     ref={ref}
-    className={cn('fixed top-0 right-0 m-0 flex flex-col p-6 z-50', className)}
+    className={cn(
+      'fixed bottom-0 right-0 flex flex-col p-4 gap-2',
+      'w-full max-w-sm m-0 list-none z-50',
+      className
+    )}
     {...props}
   />
 ));
@@ -28,7 +30,7 @@ const Toast = React.forwardRef<
   <ToastPrimitive.Root
     ref={ref}
     className={cn(
-      'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md shadow-lg p-4 flex items-center space-x-3',
+      'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md shadow-lg p-4 flex items-center justify-between',
       className
     )}
     {...props}
@@ -40,7 +42,11 @@ const ToastTitle = React.forwardRef<
   React.ElementRef<typeof ToastPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitive.Title ref={ref} className={cn('text-sm font-medium', className)} {...props} />
+  <ToastPrimitive.Title
+    ref={ref}
+    className={cn('text-sm font-semibold', className)}
+    {...props}
+  />
 ));
 ToastTitle.displayName = ToastPrimitive.Title.displayName;
 
@@ -48,7 +54,11 @@ const ToastDescription = React.forwardRef<
   React.ElementRef<typeof ToastPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitive.Description ref={ref} className={cn('text-sm', className)} {...props} />
+  <ToastPrimitive.Description
+    ref={ref}
+    className={cn('text-xs mt-1', className)}
+    {...props}
+  />
 ));
 ToastDescription.displayName = ToastPrimitive.Description.displayName;
 
@@ -56,7 +66,11 @@ const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitive.Close>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitive.Close>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitive.Close ref={ref} className={cn('text-gray-500 hover:text-gray-700', className)} {...props}>
+  <ToastPrimitive.Close
+    ref={ref}
+    className={cn('ml-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200', className)}
+    {...props}
+  >
     <Cross2Icon className="w-4 h-4" />
   </ToastPrimitive.Close>
 ));

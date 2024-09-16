@@ -16,7 +16,7 @@ import {
 import Button from '@/components/ui/Button';
 import { getRandomQuestion } from '@/services/questionService';
 import { getAIExplanation } from '@/services/explanationService';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/useToast'; // Updated hook
 
 interface AlertProps {
   questionId: string;
@@ -26,7 +26,7 @@ interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({ questionId, answer, content }) => {
   const router = useRouter();
-  const { toast } = useToast();
+  const { addToast } = useToast(); // Use addToast
   const [isPending, startTransition] = useTransition();
   const [explanation, setExplanation] = useState<string>('');
 
@@ -41,10 +41,10 @@ const Alert: React.FC<AlertProps> = ({ questionId, answer, content }) => {
           }
         })
         .catch((error) => {
-          toast({
-            variant: 'destructive',
+          addToast({
             title: 'Error',
             description: error.message,
+            variant: 'destructive',
           });
         });
     });
@@ -57,18 +57,18 @@ const Alert: React.FC<AlertProps> = ({ questionId, answer, content }) => {
           if (res) {
             setExplanation(res.explanation);
           } else {
-            toast({
-              variant: 'destructive',
+            addToast({
               title: 'Error',
               description: 'Failed to get AI explanation.',
+              variant: 'destructive',
             });
           }
         })
         .catch((error) => {
-          toast({
-            variant: 'destructive',
+          addToast({
             title: 'Error',
             description: error.message,
+            variant: 'destructive',
           });
         });
     });

@@ -1,17 +1,19 @@
 import { useContext } from 'react';
 import { ToastContext } from '@/components/ui/Toast/ToastProvider';
 
+
 /**
  * Custom hook to interact with the toast notification system.
  *
  * @example
- * const { toast } = useToast();
- * toast({
+ * const { addToast } = useToast();
+ * addToast({
  *   title: 'Notification Title',
  *   description: 'This is a toast notification.',
+ *   variant: 'success',
  * });
  *
- * @returns An object containing the toast function.
+ * @returns An object containing the addToast function.
  */
 export function useToast() {
   const context = useContext(ToastContext);
@@ -20,5 +22,5 @@ export function useToast() {
     throw new Error('useToast must be used within a ToastProvider');
   }
 
-  return context;
+  return { addToast: context.addToast };
 }
