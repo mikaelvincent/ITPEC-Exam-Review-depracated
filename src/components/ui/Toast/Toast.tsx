@@ -68,10 +68,7 @@ const ToastClose = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitive.Close
     ref={ref}
-    className={cn(
-      'ml-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200',
-      className
-    )}
+    className={cn('ml-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200', className)}
     {...props}
   >
     <Cross2Icon className="w-4 h-4" />
@@ -79,11 +76,4 @@ const ToastClose = React.forwardRef<
 ));
 ToastClose.displayName = ToastPrimitive.Close.displayName;
 
-export {
-  ToastProvider,
-  ToastViewport,
-  Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
-};
+export { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose };

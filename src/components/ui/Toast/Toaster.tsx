@@ -1,27 +1,25 @@
 "use client";
 
 import React from 'react';
-import {
-  Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
-} from './Toast';
+import { Toast, ToastTitle, ToastDescription, ToastClose, ToastViewport } from './Toast';
+import { useToastContext } from './ToastProvider';
 
-interface ToasterProps {
-  title: string;
-  description: string;
-}
+const Toaster: React.FC = () => {
+  const { toasts, removeToast } = useToastContext();
 
-const Toaster: React.FC<ToasterProps> = ({ title, description }) => {
   return (
-    <Toast>
-      <div className="flex-1">
-        <ToastTitle>{title}</ToastTitle>
-        <ToastDescription>{description}</ToastDescription>
-      </div>
-      <ToastClose />
-    </Toast>
+    <>
+      {toasts.map((toast) => (
+        <Toast key={toast.id} onOpenChange={(open) => !open && removeToast(toast.id)}>
+          <div className="flex-1">
+            {toast.title && <ToastTitle>{toast.title}</ToastTitle>}
+            {toast.description && <ToastDescription>{toast.description}</ToastDescription>}
+          </div>
+          <ToastClose />
+        </Toast>
+      ))}
+      <ToastViewport />
+    </>
   );
 };
 
