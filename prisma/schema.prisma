@@ -7,40 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String          @id @default(uuid())
-  uid       String          @unique
-  createdAt DateTime        @default(now())
-  answers   AnswerHistory[]
+model ai_explanations {
+  explanationId    Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now()) @db.Timestamp(0)
+  questionId       Int
+  explanationText  String   @db.Text
+  modelUsed        String   @db.Text
+  explanationIndex Int
 }
 
-model AnswerHistory {
-  id         String    @id @default(uuid())
-  questionId String
-  userId     String
-  status     Boolean
-  createdAt  DateTime  @default(now())
-
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  question Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+model answer_history {
+  answerId   Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+  userId     Int
+  questionId Int
+  status     Boolean  @default(true)
 }
 
-model Question {
-  id               String         @id @default(uuid())
-  questionText     String
-  questionImageUrl String?
-  questionChoices  String[]
-  correctAnswer    Int
-  createdAt        DateTime       @default(now())
-  explanations     Explanation[]
-  answers          AnswerHistory[]
+model questions {
+  questionId            Int      @id @default(autoincrement())
+  createdAt             DateTime @default(now()) @db.Timestamp(0)
+  examSource            String   @db.Text
+  questionNumber        Int
+  questionImageFileName String   @db.Text
+  correctAnswer         Int
 }
 
-model Explanation {
-  id          String    @id @default(uuid())
-  questionId  String    @unique
-  explanation String
-  createdAt   DateTime  @default(now())
-
-  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+model users {
+  userId    Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  uid       String   @db.VarChar(36)
 }
