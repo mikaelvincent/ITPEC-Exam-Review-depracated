@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { getRandomQuestion } from '@/services/questionService';
 import Question from '@/components/exams/Question';
 import Choices from '@/components/exams/Choices';
-import { Card } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { BotIcon, FrownIcon } from 'lucide-react';
 
 interface ReviewPageProps {
@@ -39,10 +39,12 @@ const ReviewPage: React.FC<ReviewPageProps> = async ({ searchParams }) => {
           </>
         ) : (
           <Card className="w-full h-96 p-8 md:p-16 space-y-5">
-            <h1 className="text-3xl font-semibold text-center text-muted-foreground">
-              No questions available.
-            </h1>
-            <FrownIcon className="w-40 h-40 mx-auto text-muted-foreground" />
+            <CardContent className="text-center space-y-5">
+              <h1 className="text-3xl font-semibold text-muted-foreground">
+                No questions available.
+              </h1>
+              <FrownIcon className="w-40 h-40 mx-auto text-muted-foreground" />
+            </CardContent>
           </Card>
         )}
       </div>
