@@ -8,11 +8,11 @@ import { z } from 'zod';
  * @param userId - The ID of the user.
  * @returns An array of question IDs.
  */
-export const getQuestionsAnswered = async (userId: string) => {
+export const getQuestionsAnswered = async (userId: number) => {
   try {
     const answers = await prisma.answerHistory.findMany({
       where: {
-        userId: parseInt(userId),
+        userId: userId,
         status: true,
       },
       select: {
@@ -33,12 +33,12 @@ export const getQuestionsAnswered = async (userId: string) => {
  * @param questionId - The ID of the question.
  * @returns A boolean indicating if the question has been answered correctly by the user.
  */
-export const checkAnsweredByUser = async (userId: string, questionId: string) => {
+export const checkAnsweredByUser = async (userId: number, questionId: number) => {
   try {
     const answer = await prisma.answerHistory.findFirst({
       where: {
-        userId: parseInt(userId),
-        questionId: parseInt(questionId),
+        userId: userId,
+        questionId: questionId,
         status: true,
       },
     });
@@ -56,12 +56,12 @@ export const checkAnsweredByUser = async (userId: string, questionId: string) =>
  * @param questionId - The ID of the question.
  * @returns The created AnswerHistory record.
  */
-export const setQuestionAnswered = async (userId: string, questionId: string) => {
+export const setQuestionAnswered = async (userId: number, questionId: number) => {
   try {
     const answer = await prisma.answerHistory.create({
       data: {
-        userId: parseInt(userId),
-        questionId: parseInt(questionId),
+        userId: userId,
+        questionId: questionId,
         status: true,
       },
     });
@@ -81,20 +81,20 @@ export const setQuestionAnswered = async (userId: string, questionId: string) =>
  */
 export const checkAnswer = async (
   values: z.infer<typeof AnswerSchema>,
-  userId: string
+  userId: number
 ) => {
   try {
     const { id: questionId, choice } = AnswerSchema.parse(values);
 
     const question = await prisma.question.findUnique({
-      where: { id: questionId },
+      where: { questionId },
     });
 
     if (!question) {
       throw new Error('Question not found.');
     }
 
-    const isCorrect = question.correctAnswer === parseInt(choice, 10);
+    const isCorrect = question.correctAnswer === choice;
 
     if (isCorrect) {
       await setQuestionAnswered(userId, questionId);
