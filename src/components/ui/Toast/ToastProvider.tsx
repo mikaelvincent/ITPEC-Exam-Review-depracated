@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { RadixToastProvider } from './Toast';
 
 interface Toast {
   id: string;
@@ -56,8 +57,10 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   };
 
   return (
-    <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
-      {children}
-    </ToastContext.Provider>
+    <RadixToastProvider>
+      <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
+        {children}
+      </ToastContext.Provider>
+    </RadixToastProvider>
   );
 };

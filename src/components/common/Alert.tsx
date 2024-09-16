@@ -16,7 +16,7 @@ import {
 import Button from '@/components/ui/Button';
 import { getRandomQuestion } from '@/services/questionService';
 import { getAIExplanation } from '@/services/explanationService';
-import { useToast } from '@/hooks/useToast'; // Updated hook
+import { useToast } from '@/hooks/useToast';
 
 interface AlertProps {
   questionId: string;
@@ -26,7 +26,7 @@ interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({ questionId, answer, content }) => {
   const router = useRouter();
-  const { addToast } = useToast(); // Use addToast
+  const { addToast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [explanation, setExplanation] = useState<string>('');
 

@@ -5,7 +5,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { cn } from '@/lib/utils';
 
-const ToastProvider = ToastPrimitive.Provider;
+const RadixToastProvider = ToastPrimitive.Provider;
 
 const ToastViewport = React.forwardRef<
   React.ElementRef<typeof ToastPrimitive.Viewport>,
@@ -76,4 +76,4 @@ const ToastClose = React.forwardRef<
 ));
 ToastClose.displayName = ToastPrimitive.Close.displayName;
 
-export { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose };
+export { RadixToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose };

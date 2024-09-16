@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { ToastContext } from '@/components/ui/Toast/ToastProvider';
 
-
 /**
  * Custom hook to interact with the toast notification system.
  *
