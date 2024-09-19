@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2024 at 07:25 PM
+-- Generation Time: Sep 19, 2024 at 07:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -129,8 +129,7 @@ CREATE TABLE `website_visits` (
   `visit_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) NOT NULL,
-  `url` text NOT NULL,
-  `referrer` text DEFAULT NULL
+  `url` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -148,6 +147,12 @@ ALTER TABLE `ai_explanations`
 --
 ALTER TABLE `answer_history`
   ADD PRIMARY KEY (`answer_id`);
+
+--
+-- Indexes for table `contributors`
+--
+ALTER TABLE `contributors`
+  ADD PRIMARY KEY (`contributor_id`);
 
 --
 -- Indexes for table `exams`
@@ -194,6 +199,12 @@ ALTER TABLE `ai_explanations`
 --
 ALTER TABLE `answer_history`
   MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contributors`
+--
+ALTER TABLE `contributors`
+  MODIFY `contributor_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `exams`
