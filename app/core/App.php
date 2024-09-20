@@ -18,25 +18,28 @@ class App
             // /contributors
             $this->controller = "ContributorController";
             $this->method = "index";
-        } elseif ($url[0] === "ITPEC-FE-Exam") {
-            // /ITPEC-FE-Exam and its subpaths
+        } elseif (isset($url[0])) {
+            // /{exam_name} and its subpaths
             $this->controller = "ExamController";
 
+            $exam_name = $url[0];
+
             if (!isset($url[1]) || $url[1] === "") {
-                // /ITPEC-FE-Exam
+                // /{exam_name}
                 $this->method = "index";
+                $this->params = [$exam_name]; // exam_name
             } elseif (
                 isset($url[1]) &&
                 isset($url[2]) &&
                 preg_match('/^Q(\d+)$/', $url[2], $matches)
             ) {
-                // /ITPEC-FE-Exam/{exam_set_name}/Q{question_number}
+                // /{exam_name}/{exam_set_name}/Q{question_number}
                 $this->method = "showQuestion";
-                $this->params = [$url[1], $matches[1]]; // exam_set_name, question_number
+                $this->params = [$exam_name, $url[1], $matches[1]]; // exam_name, exam_set_name, question_number
             } else {
-                // /ITPEC-FE-Exam/{exam_set_name}
+                // /{exam_name}/{exam_set_name}
                 $this->method = "showExamSet";
-                $this->params = [$url[1]]; // exam_set_name
+                $this->params = [$exam_name, $url[1]]; // exam_name, exam_set_name
             }
         } else {
             // Page not found

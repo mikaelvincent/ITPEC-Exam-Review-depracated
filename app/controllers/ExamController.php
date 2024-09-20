@@ -2,9 +2,9 @@
 
 class ExamController extends Controller
 {
-    public function index()
+    public function index($exam_name)
     {
-        $exam_name = "ITPEC FE Exam";
+        // Placeholder for exam name fetched from the database
         $data = [
             "page_title" => $exam_name,
             "exam_name" => $exam_name,
@@ -12,20 +12,24 @@ class ExamController extends Controller
         $this->view("exams/index", $data);
     }
 
-    public function showExamSet($exam_set_name)
+    public function showExamSet($exam_name, $exam_set_name)
     {
+        // Placeholder for exam set name fetched from the database
         $data = [
             "page_title" => $exam_set_name,
+            "exam_name" => $exam_name,
             "exam_set_name" => $exam_set_name,
         ];
         $this->view("exams/showExamSet", $data);
     }
 
-    public function showQuestion($exam_set_name, $question_number)
+    public function showQuestion($exam_name, $exam_set_name, $question_number)
     {
+        // Placeholder for question title fetched from the database
         $question_title = "Question " . $question_number;
         $data = [
             "page_title" => $question_title,
+            "exam_name" => $exam_name,
             "exam_set_name" => $exam_set_name,
             "question_number" => $question_number,
             "additional_js" => [
