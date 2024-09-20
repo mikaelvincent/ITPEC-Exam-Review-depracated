@@ -4,9 +4,10 @@ class ExamController extends Controller
 {
     public function index()
     {
+        $exam_name = "ITPEC FE Exam";
         $data = [
-            "title" => "ITPEC FE Exam",
-            "exam_name" => "ITPEC-FE-Exam",
+            "page_title" => $exam_name,
+            "exam_name" => $exam_name,
         ];
         $this->view("exams/index", $data);
     }
@@ -14,7 +15,7 @@ class ExamController extends Controller
     public function showExamSet($exam_set_name)
     {
         $data = [
-            "title" => $exam_set_name,
+            "page_title" => $exam_set_name,
             "exam_set_name" => $exam_set_name,
         ];
         $this->view("exams/showExamSet", $data);
@@ -22,8 +23,9 @@ class ExamController extends Controller
 
     public function showQuestion($exam_set_name, $question_number)
     {
+        $question_title = "Question " . $question_number;
         $data = [
-            "title" => "Question " . $question_number,
+            "page_title" => $question_title,
             "exam_set_name" => $exam_set_name,
             "question_number" => $question_number,
             "additional_js" => [
