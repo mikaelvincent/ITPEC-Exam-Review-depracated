@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . "/../layouts/header.php"; ?>
 
-<h1>Contributors</h1>
-<p>List of contributors will go here.</p>
+<h1>404 Not Found</h1>
+<p>The page you are looking for does not exist.</p>
 
 <?php require_once __DIR__ . "/../layouts/footer.php"; ?>
