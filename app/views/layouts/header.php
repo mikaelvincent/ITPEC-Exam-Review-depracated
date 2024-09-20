@@ -16,17 +16,16 @@
     </head>
     <body>
         <main>
-            <section class="py-4 py-xl-5">
-                <div class="container h-100">
-                    <ol class="breadcrumb mb-5">
-                        <li class="breadcrumb-item">
-                            <a class="text-decoration-none" href="#">
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a class="text-decoration-none" href="#">
-                                <span>Contributors</span>
-                            </a>
-                        </li>
-                    </ol>
+            <div class="container py-4 py-xl-5">
+                <ol class="breadcrumb mb-5">
+                    <li class="breadcrumb-item">
+                        <a class="text-decoration-none" href="#">
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-decoration-none" href="#">
+                            <span>Contributors</span>
+                        </a>
+                    </li>
+                </ol>
