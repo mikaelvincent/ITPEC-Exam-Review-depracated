@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><?php echo $data["title"]; ?> | ITPEC Exam Review</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>ITPEC Exam Review</h1>
-        <nav>
-            <a href="/">Home</a> |
-            <a href="/ITPEC-FE-Exam">ITPEC FE Exam</a> |
-            <a href="/contributors">Contributors</a>
-        </nav>
-    </header>
-    <main>
+<html data-bs-theme="light" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title><?php echo $data["title"]; ?> | ITPEC Exam Review</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/sketchy/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neucha|Cabin+Sketch&amp;display=swap">
+        <?php if (isset($additional_css) && is_array($additional_css)) {
+            foreach ($additional_css as $css_file) {
+                echo '<link rel="stylesheet" href="' . $css_file . '">';
+            }
+        } ?>
+    </head>
+    <body>
+        <main>

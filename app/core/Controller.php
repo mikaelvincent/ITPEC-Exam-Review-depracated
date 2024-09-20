@@ -12,6 +12,8 @@ class Controller
 
     public function view($view, $data = [])
     {
+        // Extract data array into variables
+        extract($data);
         // Require view file
         require_once __DIR__ . "/../views/" . $view . ".php";
     }

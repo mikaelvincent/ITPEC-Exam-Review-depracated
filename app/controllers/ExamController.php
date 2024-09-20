@@ -26,6 +26,10 @@ class ExamController extends Controller
             "title" => "Question " . $question_number,
             "exam_set_name" => $exam_set_name,
             "question_number" => $question_number,
+            "additional_js" => [
+                "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js",
+                "assets/js/question-interaction.js",
+            ],
         ];
         $this->view("exams/showQuestion", $data);
     }
