@@ -1,47 +1,34 @@
 <?php require_once __DIR__ . "/../layouts/header.php"; ?>
 
+<?php
+$question_image_url =
+    "assets/img/" . $exam_set_alias . "_Q" . $question_number . ".png";
+$choices_count = $question["choices_count"];
+$correct_choice_index = $question["correct_choice_index"];
+$choice_labels = range("A", "Z");
+?>
+
 <div class="row">
     <div class="col-12 col-lg-8 col-xl-9">
-        <img class="img-fluid mb-5" src="assets/img/2007Apr_FE_AM_Q1.png">
+        <img class="img-fluid mb-5" src="<?= htmlspecialchars(
+            $question_image_url
+        ) ?>">
     </div>
     <div class="col-12 col-lg-4 col-xl-3 order-lg-first">
         <div class="row gy-4 row-cols-lg-1 mb-5">
-            <div class="col-6 order-lg-5">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <a class="stretched-link text-decoration-none" id="choiceA" href="#">
-                            <h4 class="fw-bold text-center">A.</h4>
-                        </a>
+            <?php for ($i = 0; $i < $choices_count; $i++): ?>
+                <div class="col-6 order-lg-5">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <a class="stretched-link text-decoration-none" href="#">
+                                <h4 class="fw-bold text-center"><?= $choice_labels[
+                                    $i
+                                ] ?>.</h4>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 order-lg-5">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <a class="stretched-link text-decoration-none" href="#">
-                            <h4 class="fw-bold text-center">B.</h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 order-lg-5">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <a class="stretched-link text-decoration-none" href="#">
-                            <h4 class="fw-bold text-center">C.</h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 order-lg-5">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <a class="stretched-link text-decoration-none" href="#">
-                            <h4 class="fw-bold text-center">D.</h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php endfor; ?>
             <div class="col-12 order-lg-4">
                 <hr>
             </div>
@@ -100,7 +87,7 @@
 </div>
 <script>
     var quizConfig = {
-        correctAnswer: 1
+        correctAnswer: <?= $question["correct_choice_index"] ?>
     };
 </script>
 

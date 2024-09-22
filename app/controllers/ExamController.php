@@ -74,12 +74,56 @@ class ExamController extends Controller
 
     public function showQuestion($exam_name, $exam_set_name, $question_number)
     {
+        $examModel = $this->model("Exam");
+        $questionModel = $this->model("Question");
+
+        $exam_alias = urldecode($exam_name);
+        $exam = $examModel->getExamByAlias($exam_alias);
+
+        if (!$exam || empty($exam)) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
+        $exam_set_alias = urldecode($exam_set_name);
+        $exam_set = $examModel->getExamSetByAlias(
+            $exam["exam_id"],
+            $exam_set_alias
+        );
+
+        if (!$exam_set || empty($exam_set)) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
+        $question_number = intval($question_number);
+        $question = $questionModel->getQuestionByNumberAndExamSetId(
+            $exam_set["exam_set_id"],
+            $question_number
+        );
+
+        if (!$question || empty($question)) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
         $question_title = "Question " . $question_number;
+
         $data = [
             "page_title" => $question_title,
-            "exam_name" => $exam_name,
-            "exam_set_name" => $exam_set_name,
+            "exam_name" => $exam["exam_name"],
+            "exam_alias" => $exam["exam_alias"],
+            "exam_alias_url" => makeUrlFriendly($exam["exam_alias"]),
+            "exam_set_name" => $exam_set["exam_set_name"],
+            "exam_set_alias" => $exam_set["exam_set_alias"],
+            "exam_set_alias_url" => makeUrlFriendly(
+                $exam_set["exam_set_alias"]
+            ),
             "question_number" => $question_number,
+            "question" => $question,
             "additional_js" => [
                 "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js",
                 "../../assets/js/question-interaction.js",
