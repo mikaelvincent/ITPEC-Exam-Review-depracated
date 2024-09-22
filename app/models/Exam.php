@@ -52,4 +52,29 @@ class Exam extends Model
         }
         return $results;
     }
+
+    public function getExamSetByAlias($exam_id, $exam_set_alias)
+    {
+        $words = extractWordsFromAlias($exam_set_alias);
+
+        if (empty($words)) {
+            return null;
+        }
+
+        $likeQuery = buildLikeQuery($words, "exam_set_alias");
+
+        $sql =
+            "SELECT * FROM exam_sets WHERE exam_id = :exam_id AND " .
+            $likeQuery .
+            " LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":exam_id", $exam_id);
+
+        foreach ($words as $index => $word) {
+            $stmt->bindValue(":word" . $index, "%" . $word . "%");
+        }
+
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

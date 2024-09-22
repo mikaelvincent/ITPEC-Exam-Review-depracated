@@ -29,10 +29,45 @@ class ExamController extends Controller
 
     public function showExamSet($exam_name, $exam_set_name)
     {
+        $examModel = $this->model("Exam");
+        $questionModel = $this->model("Question");
+
+        $exam_alias = urldecode($exam_name);
+        $exam = $examModel->getExamByAlias($exam_alias);
+
+        if (!$exam || empty($exam)) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
+        $exam_set_alias = urldecode($exam_set_name);
+        $exam_set = $examModel->getExamSetByAlias(
+            $exam["exam_id"],
+            $exam_set_alias
+        );
+
+        if (!$exam_set || empty($exam_set)) {
+            $errorController = new ErrorController();
+            $errorController->notFound();
+            return;
+        }
+
+        $questions = $questionModel->getQuestionsByExamSetId(
+            $exam_set["exam_set_id"]
+        );
+
         $data = [
-            "page_title" => $exam_set_name,
-            "exam_name" => $exam_name,
-            "exam_set_name" => $exam_set_name,
+            "page_title" => $exam_set["exam_set_name"],
+            "exam_name" => $exam["exam_name"],
+            "exam_alias" => $exam["exam_alias"],
+            "exam_alias_url" => makeUrlFriendly($exam["exam_alias"]),
+            "exam_set_name" => $exam_set["exam_set_name"],
+            "exam_set_alias" => $exam_set["exam_set_alias"],
+            "exam_set_alias_url" => makeUrlFriendly(
+                $exam_set["exam_set_alias"]
+            ),
+            "questions" => $questions,
         ];
         $this->view("exams/showExamSet", $data);
     }

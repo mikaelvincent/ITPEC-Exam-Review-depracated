@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2024 at 10:00 AM
+-- Generation Time: Sep 22, 2024 at 06:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -105,7 +105,7 @@ CREATE TABLE `questions` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `exam_set_id` int(11) NOT NULL,
   `question_number` int(11) NOT NULL,
-  `choices_count` int(11) NOT NULL,
+  `choices_count` int(11) NOT NULL DEFAULT 4,
   `correct_choice_index` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
