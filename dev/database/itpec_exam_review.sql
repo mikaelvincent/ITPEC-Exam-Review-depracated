@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2024 at 07:53 PM
+-- Generation Time: Sep 22, 2024 at 10:00 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -76,7 +76,8 @@ CREATE TABLE `contributors` (
 CREATE TABLE `exams` (
   `exam_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `exam_name` text NOT NULL
+  `exam_name` text NOT NULL,
+  `exam_alias` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -89,6 +90,7 @@ CREATE TABLE `exam_sets` (
   `exam_set_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `exam_set_name` text NOT NULL,
+  `exam_set_alias` text NOT NULL,
   `exam_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../helpers/breadcrumb_helper.php";
-
 $breadcrumbs = get_breadcrumbs();
 $activeBreadcrumb = array_pop($breadcrumbs);
 ?>
