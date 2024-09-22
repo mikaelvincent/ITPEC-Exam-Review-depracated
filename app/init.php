@@ -13,3 +13,8 @@ spl_autoload_register(function ($class) {
         }
     }
 });
+
+require_once __DIR__ . "/helpers/breadcrumb_helper.php";
+require_once __DIR__ . "/helpers/env_helper.php";
+require_once __DIR__ . "/helpers/exam_helper.php";
+require_once __DIR__ . "/helpers/url_helper.php";
