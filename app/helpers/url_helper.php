@@ -2,8 +2,5 @@
 
 function makeUrlFriendly($string)
 {
-    $string = strtolower($string);
-    $string = preg_replace("/[^a-z0-9_]+/", "_", $string);
-    $string = trim($string, "_");
-    return $string;
+    return str_replace("%20", "-", rawurlencode(strtolower($string)));
 }
