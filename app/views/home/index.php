@@ -5,9 +5,11 @@
         <div class="col mb-3">
             <a class="btn btn-primary btn-lg h-100 w-100" role="button" href="<?= htmlspecialchars(
                 $exam["exam_alias_url"]
-            ) ?>"><?= htmlspecialchars(
-    $exam["exam_name"]
-) ?> (<?= htmlspecialchars($exam["exam_alias"]) ?>)</a>
+            ) ?>">
+                <?= htmlspecialchars(
+                    $exam["exam_name"]
+                ) ?> (<?= htmlspecialchars($exam["exam_alias"]) ?>)
+            </a>
         </div>
     <?php endforeach; ?>
     <div class="col mb-5">
