@@ -1,4 +1,7 @@
-project_structure.txt
-generate_project_structure.py
-.projectignore
-.projectfooter
+.map
+.mapheader
+.mapfooter
+.mapignore
+.mapomit
+
+dev/design/bootstrap_studio/exports
