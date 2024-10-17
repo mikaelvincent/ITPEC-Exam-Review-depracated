@@ -1,4 +1,4 @@
-const CLASS_SELECTED = 'bg-primary-subtle';
+const CLASS_SELECTED = 'bg-light-subtle';
 const CLASS_CORRECT = 'bg-success-subtle';
 const CLASS_WRONG = 'bg-danger-subtle';
 const CLASS_BORDER_SELECTED = 'border-primary';
